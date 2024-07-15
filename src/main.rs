@@ -14,10 +14,37 @@
 #![cfg_attr(test, reexport_test_harness_main = "test_main")]
 #![cfg_attr(test, test_runner(agb::test_runner::test_runner))]
 
+
+
+
+
 // The main function must take 1 arguments and never return. The agb::entry decorator
 // ensures that everything is in order. `agb` will call this after setting up the stack
 // and interrupt handlers correctly. It will also handle creating the `Gba` struct for you.
+#[allow(unused)]
 #[agb::entry]
 fn main(mut gba: agb::Gba) -> ! {
-    agb::no_game(gba);
+
+    use agb::{
+        include_aseprite,
+        display::object::{Graphics, Tag}
+    };
+
+    // Import the sprites in to this static. This holds the sprite 
+    // and palette data in a way that is manageable by agb.
+    static GRAPHICS: &Graphics = include_aseprite!("wall.aseprite");
+
+    // We define some easy ways of referencing the sprites
+    static WALL: &Tag = GRAPHICS.tags().get("Wall");
+
+
+    let object = gba.display.object.get_managed();
+    let mut block = object.object_sprite(WALL.sprite(0));
+
+    block.set_x(50).set_y(50).show();
+
+    object.commit();
+
+    loop {}
+
 }
