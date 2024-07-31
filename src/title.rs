@@ -1,19 +1,19 @@
 
-use agb::display::tiled::{RegularMap, tiledMap, VRamManager};
+use agb::display::tiled::{RegularMap, TiledMap, VRamManager};
 
 agb::include_background_gfx!(splash_screens,
-                             splash => deduplicate "gfx/title.png",
+                             title => deduplicate "gfx/title.png",
                              );
 
 pub enum SplashScreen {
     Title,
-    End,
+    //End,
 }
 
 pub fn show_splash_screen(
     which: SplashScreen,
     //sfx: &mut SFxPlayer,
-    map: &mut Regularmap,
+    map: &mut RegularMap,
     vram: &mut VRamManager,
 
     ) {
@@ -25,13 +25,29 @@ pub fn show_splash_screen(
     };
 
     let vblank = agb::interrupt::VBlank::get();
-    let mut input = agbz::input::ButtonController::new();
+    let mut input = agb::input::ButtonController::new();
 
     vblank.wait_for_vblank();
 
     map.fill_with(vram, tiled_data);
 
     map.commit(vram);
+
+    map.set_background_palettes(splash_screens::PALETTES);
+    map.set_visible(true);
+
+    loop {
+        input.update();
+        if input.is_just_pressed(agb::input::Button::A) {
+            break;
+        }
+
+        vblank.wait_for_vblank();
+    }
+
+    map.set_visible(false);
+    map.clear(vram);
+
 
 
 }
