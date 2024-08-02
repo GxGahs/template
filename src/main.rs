@@ -17,14 +17,14 @@
 
 
 
-
 // The main function must take 1 arguments and never return. The agb::entry decorator
 // ensures that everything is in order. `agb` will call this after setting up the stack
 // and interrupt handlers correctly. It will also handle creating the `Gba` struct for you.
 #[allow(unused)]
 #[agb::entry]
-fn main(mut gba: agb::Gba) -> ! {
+fn entry(mut gba: agb::Gba) -> ! {
 
+    /*
     use agb::{
         include_aseprite,
         display::object::{Graphics, Tag}
@@ -45,6 +45,9 @@ fn main(mut gba: agb::Gba) -> ! {
 
     object.commit();
 
-    loop {}
+    loop {}*/
+
+    testproject::main(gba);
+
 
 }

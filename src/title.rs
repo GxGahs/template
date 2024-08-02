@@ -12,7 +12,7 @@ pub enum SplashScreen {
 
 pub fn show_splash_screen(
     which: SplashScreen,
-    //sfx: &mut SFxPlayer,
+    //sfx: &mut SFXPlayer,
     map: &mut RegularMap,
     vram: &mut VRamManager,
 
@@ -29,11 +29,11 @@ pub fn show_splash_screen(
 
     vblank.wait_for_vblank();
 
-    map.fill_with(vram, tiled_data);
+    map.fill_with(vram, tile_data);
 
     map.commit(vram);
 
-    map.set_background_palettes(splash_screens::PALETTES);
+    vram.set_background_palettes(splash_screens::PALETTES);
     map.set_visible(true);
 
     loop {
