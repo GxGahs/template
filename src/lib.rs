@@ -36,11 +36,17 @@ pub struct VaultLayer {
 
 }
 
-static GRAPHICS: &Graphics =agb::include_aseprite!("gfx/player.aseprite");
+static GRAPHICS: &Graphics = agb::include_aseprite!("gfx/player.aseprite");
+static ENVIRONMENT_TILES: &Graphics = agb::include_aseprite!("gfx/environment_tiles.aseprite");
 static TAG_MAP: &TagMap = GRAPHICS.tags();
+static ENVIRONMENT_TAGS: &TagMap = ENVIRONMENT_TILES.tags();
 
 static LFACING: &Tag = TAG_MAP.get("LFacing");
 static RFACING: &Tag = TAG_MAP.get("RFacing");
+static WALL_TILE: &Tag = ENVIRONMENT_TAGS.get("Wall");
+static FLOOR_TILE: &Tag = ENVIRONMENT_TAGS.get("Floor");
+
+
 
 type FixedNumberType = FixedNum<10>;
 
